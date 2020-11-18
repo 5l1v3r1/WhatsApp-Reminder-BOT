@@ -1,4 +1,5 @@
 from datetime import datetime
 
-currentTime = datetime.now().strftime("%H:%M:%S")
-print(currentTime)
+def getCurrentTime():
+
+    return datetime.now().strftime("%H:%M:%S")

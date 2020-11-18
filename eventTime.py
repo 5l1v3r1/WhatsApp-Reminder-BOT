@@ -54,10 +54,140 @@ def main():
         #print(currentTime)
 
         # Declaring the current time and subtracting the even time from it
-        theCurrentTime = currentTime
-        print(currentTime)
-        eventTime = start.split("T")[1][:5]+ ":00"
-        print(f"The event time is {eventTime}")
+        #theCurrentTime = currentTime
+        #print(currentTime)
+        eventTimeIs = start.split("T")[1][:5]+ ":00"
+        #print(f"The event time is {event['summary']} {eventTime}")
+        summary = event['summary']
 
-if __name__ == '__main__':
-    main()
+
+def eventTime():
+    creds = None
+
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('calendar', 'v3', credentials=creds)
+
+    # Call the Calendar API
+    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    events_result = service.events().list(calendarId='primary', timeMin=now,
+                                        maxResults=1, singleEvents=True,
+                                        orderBy='startTime').execute()
+    events = events_result.get('items', [])
+
+    if not events:
+        print('No upcoming events found.')
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        #print(start, event['summary'])
+        #print(f'{event["summary"]} is starting at {start.split("T")[1][:5]}!')
+        #print(currentTime)
+
+        # Declaring the current time and subtracting the even time from it
+        #theCurrentTime = currentTime
+        #print(currentTime)
+        eventTimeIs = start.split("T")[1][:5]+ ":00"
+        #print(f"The event time is {event['summary']} {eventTime}")
+        #summary = event['summary']
+        return eventTimeIs
+        
+        
+
+def eventInfo():
+    creds = None
+
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('calendar', 'v3', credentials=creds)
+
+    # Call the Calendar API
+    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    events_result = service.events().list(calendarId='primary', timeMin=now,
+                                        maxResults=1, singleEvents=True,
+                                        orderBy='startTime').execute()
+    events = events_result.get('items', [])
+
+    if not events:
+        print('No upcoming events found.')
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        #print(start, event['summary'])
+        #print(f'{event["summary"]} is starting at {start.split("T")[1][:5]}!')
+        #print(currentTime)
+
+        # Declaring the current time and subtracting the even time from it
+        #theCurrentTime = currentTime
+        #print(currentTime)
+        #eventTimeIs = start.split("T")[1][:5]+ ":00"
+        #print(f"The event time is {event['summary']} {eventTime}")
+        summary = event['summary']
+        return summary
+
+def eventDay():
+    creds = None
+
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('calendar', 'v3', credentials=creds)
+
+    # Call the Calendar API
+    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    events_result = service.events().list(calendarId='primary', timeMin=now,
+                                        maxResults=1, singleEvents=True,
+                                        orderBy='startTime').execute()
+    events = events_result.get('items', [])
+
+    if not events:
+        print('No upcoming events found.')
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        #print(start, event['summary'])
+        #print(f'{event["summary"]} is starting at {start.split("T")[1][:5]}!')
+        #print(currentTime)
+
+        # Declaring the current time and subtracting the even time from it
+        #theCurrentTime = currentTime
+        #print(currentTime)
+        #eventTimeIs = start.split("T")[1][:5]+ ":00"
+        #print(f"The event time is {event['summary']} {eventTime}")
+        summary1 = event['start'].get('dateTime')
+        return summary1
